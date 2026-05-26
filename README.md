@@ -2,11 +2,22 @@
 
 A highly optimized, asynchronous FastAPI engine for tracking cryptocurrency asset holdings, transaction history, and real-time profits and losses (P&L).
 
-## 📊 Performance Benchmarks
+## Performance Benchmarks
 
-We ran performance benchmarking across different transaction volumes (10, 50, and 250 request loads) utilizing an in-memory SQLite backend and a mocked CoinGecko price client to isolate pure application engine execution speed:
+To ensure high-throughput capabilities and profile latency under execution stress, the REST API engine was benchmarked under two distinct profiles using an in-memory SQLite database and a mocked CoinGecko pricing handler to isolate core framework overhead.
 
-![API Latency Benchmark Comparison Graph](/Users/sagnikbiswas/.gemini/antigravity-ide/brain/e78478e7-4f53-44d8-99cf-05f261211562/benchmark_comparison.png)
+### Single Load Performance (50 Requests)
+Below is the latency profile representing request processing time under a standard single load sequence:
+
+![Single Load Latency Benchmark Graph](assets/benchmark.png)
+
+- Database reads (live pricing check and portfolio aggregates) average under 1.5ms.
+- Write actions (adding a holding with DCA computation) process in 2.6ms.
+
+### Multi-Load Comparison (10, 50, and 250 requests)
+The chart below illustrates how performance profiles scale across varying transaction request loads:
+
+![Multi-Load Latency Comparison Graph](assets/benchmark_comparison.png)
 
 - **Read Operations**: Query operations such as `GET Live Price` and `GET Portfolio Summary` scale flatly and complete in under ~1.5ms even under high loads.
 - **Write Operations**: Holdings updates (`POST Buy Holding`) process in ~2.6ms with full validation.
@@ -14,7 +25,7 @@ We ran performance benchmarking across different transaction volumes (10, 50, an
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 Below is the high-level architecture diagram of the REST API engine:
 
@@ -38,7 +49,7 @@ graph LR
 
 ---
 
-## ⚡ Setup & Quickstart
+## Setup and Quickstart
 
 ### Prerequisites
 Ensure a local PostgreSQL instance is running with a database named `crypto_tracker`:
@@ -78,7 +89,7 @@ PYTHONPATH=. pytest -v
 
 ---
 
-## 📡 API Interface
+## API Interface
 
 ### Authentication
 - `POST /api/v1/auth/register` - Registers a new user.
