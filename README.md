@@ -1,6 +1,6 @@
 # Crypto Portfolio Tracker REST API
 
-A highly optimized, asynchronous FastAPI engine for tracking cryptocurrency asset holdings, transaction history, and real-time profits and losses (P&L).
+A asynchronous FastAPI engine for tracking cryptocurrency asset holdings, transaction history, and real-time profits and losses (P&L).
 
 ## Performance Benchmarks
 
